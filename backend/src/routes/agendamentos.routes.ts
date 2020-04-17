@@ -2,25 +2,24 @@ import { Router } from 'express'
 import AgendamentoRepository from '../repositories/Agendamento'
 import CriarAgendamentoService from '../services/CriarAgendamentoService'
 import { parseISO } from 'date-fns'
+import { getCustomRepository } from 'typeorm'
 const BASE_PATH = '/agendamentos'
 const agendamentosRouter = Router()
 
-const agendamentoRepository = new AgendamentoRepository()
-
-agendamentosRouter.get('/', (req, res) => {
-    return res.json(agendamentoRepository.findAll())
+agendamentosRouter.get('/', async (req, res) => {
+    const repository = getCustomRepository(AgendamentoRepository)
+    return res.json(await repository.find())
 })
 
-agendamentosRouter.post('/', (req, res) => {
+agendamentosRouter.post('/', async (req, res) => {
     try {
         let { provider, date } = req.body
         if (!date) date = new Date()
         const parsedDate = parseISO(date)
 
-        const a = new CriarAgendamentoService(agendamentoRepository)
-            .execute({ provider, date: parsedDate })
-
-        return res.json(a)
+        const service = new CriarAgendamentoService()
+            
+        return res.json(await service.execute({ provider, date: parsedDate }))
     } catch (error) {
         return res.status(400).json({ error: error.message })
     }

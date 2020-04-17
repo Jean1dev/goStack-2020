@@ -1,7 +1,7 @@
 import { startOfHour } from 'date-fns'
 import AgendamentoModel from '../model/Agendamento'
 import AgendamentoRepository from '../repositories/Agendamento'
-import { response } from 'express'
+import { getCustomRepository } from 'typeorm'
 
 interface RequestDto {
     date: Date
@@ -12,20 +12,22 @@ class CriarAgendamentoService {
 
     private repository: AgendamentoRepository
 
-    constructor(repository: AgendamentoRepository) {
-        this.repository = repository
+    constructor() {
+        this.repository = getCustomRepository(AgendamentoRepository)
     }
 
-    public execute({ provider, date} : RequestDto): AgendamentoModel {
+    public async execute({ provider, date }: RequestDto): Promise<AgendamentoModel> {
         const dataDoAgendamento = startOfHour(date)
 
-        const existeAgendamentoComMesmaData = this.repository.findByDate(dataDoAgendamento)
+        const existeAgendamentoComMesmaData = await this.repository.findByDate(dataDoAgendamento)
 
         if (existeAgendamentoComMesmaData) {
             throw Error('Ja existe um agendamento pra esse dia')
         }
 
-        return this.repository.create({ provider, date: dataDoAgendamento })
+        return await this.repository.save(
+            this.repository.create({ provider, date: dataDoAgendamento })
+        )
     }
 }
 

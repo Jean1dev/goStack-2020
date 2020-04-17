@@ -1,0 +1,13 @@
+version: '3.4'
+
+services: 
+    postgres:
+        image: postgres:alpine
+        ports:
+          - "5432:5432"
+        environment:
+          POSTGRES_DB: "db_go_stack"
+          POSTGRES_USER: ""
+          POSTGRES_PASSWORD: ""
+        volumes:
+          - "./volumes/postgres/:/var/lib/postgresql/data/"
