@@ -1,14 +1,16 @@
 import React from 'react';
 import GlobalStyle from './styles/global'
 import SignIn from './pages/singIn';
+import { AuthProvider } from './hooks/AuthContext'
 
-function App() {
+export default function App() {
   return (
     <>
       <GlobalStyle />
-      <SignIn/>
+      <AuthProvider>
+        <SignIn />
+      </AuthProvider>
     </>
   );
 }
 
-export default App;
