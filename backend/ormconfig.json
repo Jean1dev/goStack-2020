@@ -2,8 +2,8 @@
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
-    "username": "",
-    "password": "",
+    "username": "jeanfernandes",
+    "password": "admin",
     "database": "db_go_stack",
     "entities": [
         "./src/model/*.ts"

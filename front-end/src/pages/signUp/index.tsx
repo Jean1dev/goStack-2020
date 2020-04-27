@@ -8,9 +8,14 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import * as Yup from 'yup'
 import getValidationErrors from '../../utils/getValidationErros'
+import { Link, useHistory } from 'react-router-dom'
+import api from '../../services/api'
+import { useToast } from '../../hooks/ToastContext'
 
 const SignUp: React.FC = () => {
     const formRef = useRef<FormHandles>(null)
+    const { addToast } = useToast()
+    const history = useHistory()
 
     const handleSubmit = useCallback(async (data: object): Promise<void> => {
         try {
@@ -24,10 +29,26 @@ const SignUp: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false
             })
+
+            await api.post('/usuarios', data)
+            addToast({
+                type: 'success',
+                title: 'Cadastro realizado com sucesso',
+                description: 'Faca seu login'
+            })
+
+            history.push('/')
         } catch (error) {
-            formRef.current?.setErrors(getValidationErrors(error))
+            if (error instanceof Yup.ValidationError) {
+                formRef.current?.setErrors(getValidationErrors(error))
+            }
+            
+            addToast({
+                type: 'error',
+                title: 'Ocorreu um erro no cadastro'
+            })
         }
-    }, [])
+    }, [history, addToast])
 
     return (
         <Container>
@@ -45,9 +66,10 @@ const SignUp: React.FC = () => {
                     <Button type="submit">Cadastrar</Button>
                 </Form>
 
-                <a href="forgot">
+                <Link to="/">
                     <FiArrowLeft />
-                Voltar</a>
+                Voltar
+                </Link>
 
             </Content>
         </Container>
