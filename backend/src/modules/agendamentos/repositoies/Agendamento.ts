@@ -1,4 +1,4 @@
-import Agendamento from '../model/Agendamento'
+import Agendamento from '../typeorm/model/Agendamento'
 import { EntityRepository, Repository } from 'typeorm'
 
 @EntityRepository(Agendamento)

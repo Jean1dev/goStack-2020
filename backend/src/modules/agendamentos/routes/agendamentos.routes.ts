@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import AgendamentoRepository from '../repositories/Agendamento'
-import CriarAgendamentoService from '../services/CriarAgendamentoService'
+import AgendamentoRepository from '@modules/agendamentos/repositoies/Agendamento'
+import CriarAgendamentoService from '@modules/agendamentos/services/CriarAgendamentoService'
 import { parseISO } from 'date-fns'
 import { getCustomRepository } from 'typeorm'
-import authenticationMiddleware from '../middlewares/autenticacao'
+import authenticationMiddleware from '@shared/infra/http/middlewares/autenticacao'
 
 const BASE_PATH = '/agendamentos'
 const agendamentosRouter = Router()

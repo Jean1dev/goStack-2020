@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import CriarUsuarioService from '../services/CriarUsuarioService'
-import authenticateMiddlware from '../middlewares/autenticacao'
+import authenticateMiddlware from '@shared/infra/http/middlewares/autenticacao'
 import multer from 'multer'
-import multerConfig from '../config/upload'
+import multerConfig from '@config/upload'
 import UpdateUsuarioAvatarService from '../services/UpdateUsuarioAvatar'
 
 const BASE_PATH = '/usuarios'
