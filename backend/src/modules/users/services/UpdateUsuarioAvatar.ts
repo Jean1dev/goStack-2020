@@ -1,39 +1,43 @@
 import fs from 'fs'
 import path from 'path'
-import { Repository, getRepository } from "typeorm";
 import Usuario from "../typeorm/model/Usuario";
 import config from '@config/upload'
 import AppError from '@shared/errors/AppError';
+import IUserRepository from '../repositories/IUserRepository';
+import { inject, injectable } from 'tsyringe';
+import IStorageProvider from '@shared/providers/StorageProvider/IStorageProvider';
 
 interface Request {
     user_id: string,
     avatarFileName: string
 }
 
+@injectable()
 export default class UpdateUsuarioAvatarService {
-    private repository: Repository<Usuario>
+    private repository: IUserRepository
+    private storage: IStorageProvider
 
-    constructor() {
-        this.repository = getRepository(Usuario)
+    constructor(
+        @inject('UserRepository') repository: IUserRepository,
+        @inject('DiskStorageProvider') storage: IStorageProvider) 
+    {
+        this.repository = repository
+        this.storage = storage
     }
 
     public async execute({ user_id, avatarFileName }: Request): Promise<Usuario> {
-        const user = await this.repository.findOne(user_id)
+        const user = await this.repository.findById(user_id)
 
         if (!user) {
             throw new AppError('Usuario nao encontrado', 401)
         }
 
         if (user.avatar) {
-            const avatarAntigoPath = path.join(config.directory, user.avatar)
-            const fileExists = await fs.promises.stat(avatarAntigoPath)
-
-            if (fileExists) {
-                await fs.promises.unlink(avatarAntigoPath)
-            }
+            await this.storage.deleteFile(user.avatar)
         }
 
-        user.avatar = avatarFileName
+        const filename = await this.storage.saveFile(avatarFileName)
+        user.avatar = filename
         await this.repository.save(user)
         return user
     }

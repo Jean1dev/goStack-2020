@@ -1,7 +1,8 @@
-import UsuarioModel from '../typeorm/model/Usuario'
-import { getRepository, Repository } from 'typeorm'
 import { hash } from 'bcryptjs'
 import AppError from '@shared/errors/AppError';
+import IUserRepository from '../repositories/IUserRepository';
+import Usuario from '../typeorm/model/Usuario';
+import { inject, injectable } from 'tsyringe';
 
 interface Request {
     name: string
@@ -9,18 +10,17 @@ interface Request {
     password: string
 }
 
+@injectable()
 export default class CriarUsuarioService {
 
-    private repository: Repository<UsuarioModel>
+    private repository: IUserRepository
 
-    constructor() {
-        this.repository = getRepository(UsuarioModel)
+    constructor(@inject('UserRepository') repository: IUserRepository) {
+        this.repository = repository
     }
 
-    public async execute({ name, email, password }: Request): Promise<UsuarioModel> {
-        const checkUserExistes = await this.repository.findOne({
-            where: { email }
-        })
+    public async execute({ name, email, password }: Request): Promise<Usuario | undefined> {
+        const checkUserExistes = await this.repository.findByEmail(email)
 
         if (checkUserExistes) {
             throw new AppError('Email ja cadastrado')
@@ -33,7 +33,6 @@ export default class CriarUsuarioService {
             password: hashedPassword
         })
 
-        await this.repository.save(user)
         return user
     }
 }

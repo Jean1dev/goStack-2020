@@ -6,12 +6,12 @@
     "password": "admin",
     "database": "db_go_stack",
     "entities": [
-        "./src/model/*.ts"
+        "./src/modules/**/typeorm/model/*.ts"
     ],
     "migrations": [
-        "./src/database/migrations/*.ts"
+        "./src/shared/infra/database/migrations/*.ts"
     ],
     "cli": {
-        "migrationsDir": "./src/database/migrations"
+        "migrationsDir": "./src/shared/infra/database/migrations/*.ts"
     }
 }

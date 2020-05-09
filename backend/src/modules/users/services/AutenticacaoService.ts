@@ -1,9 +1,10 @@
-import { Repository, getRepository } from "typeorm";
 import Usuario from "../typeorm/model/Usuario";
 import config from '@config/auth'
 import { compare } from "bcryptjs";
 import { sign } from 'jsonwebtoken'
 import AppError from '@shared/errors/AppError';
+import IUserRepository from "../repositories/IUserRepository";
+import { inject, injectable } from "tsyringe";
 
 interface Request {
     email: string,
@@ -15,18 +16,17 @@ interface Response {
     token: string
 }
 
+@injectable()
 export default class AutenticacaoService {
 
-    private repository: Repository<Usuario>
+    private repository: IUserRepository
 
-    constructor() {
-        this.repository = getRepository(Usuario)
+    constructor(@inject('UserRepository') repository: IUserRepository) {
+        this.repository = repository
     }
 
     public async execute({ email, password }: Request): Promise<Response> {
-        const user = await this.repository.findOne({
-            where: { email }
-        })
+        const user = await this.repository.findByEmail(email)
 
         if (!user) {
             throw new AppError('Usuario nao existe', 401)

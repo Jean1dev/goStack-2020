@@ -1,20 +1,21 @@
 import { startOfHour } from 'date-fns'
 import AgendamentoModel from '../typeorm/model/Agendamento'
-import AgendamentoRepository from '@modules/agendamentos/repositoies/Agendamento'
-import { getCustomRepository } from 'typeorm'
 import AppError from '@shared/errors/AppError'
+import { IAgendamentosRepository } from '../repositories/IAgendamentosRepository'
+import { inject, injectable } from 'tsyringe'
 
 interface RequestDto {
     date: Date
-    provider_id: String
+    provider_id: string
 }
 
+@injectable()
 class CriarAgendamentoService {
 
-    private repository: AgendamentoRepository
+    private repository: IAgendamentosRepository
 
-    constructor() {
-        this.repository = getCustomRepository(AgendamentoRepository)
+    constructor(@inject('AgendamentoRepository') repository: IAgendamentosRepository) {
+        this.repository = repository
     }
 
     public async execute({ provider_id, date }: RequestDto): Promise<AgendamentoModel> {
@@ -26,9 +27,7 @@ class CriarAgendamentoService {
             throw new AppError('Ja existe um agendamento pra esse dia')
         }
 
-        return await this.repository.save(
-            this.repository.create({ provider_id, date: dataDoAgendamento })
-        )
+        return await this.repository.create({ provider_id, date: dataDoAgendamento })
     }
 }
 
