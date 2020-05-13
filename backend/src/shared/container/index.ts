@@ -14,3 +14,8 @@ container.registerSingleton<IUserRepository>(
     'UserRepository',
     UserRepository
 )
+
+// container.registerSingleton<IUserTokenRepository>(
+//     'UserTokenRepository',
+    
+// )
