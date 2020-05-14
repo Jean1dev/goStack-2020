@@ -19,7 +19,7 @@ export default class UpdateUsuarioAvatarService {
 
     constructor(
         @inject('UserRepository') repository: IUserRepository,
-        @inject('DiskStorageProvider') storage: IStorageProvider) 
+        @inject('StorageProvider') storage: IStorageProvider) 
     {
         this.repository = repository
         this.storage = storage

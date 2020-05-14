@@ -1,5 +1,4 @@
 import { injectable, inject } from "tsyringe";
-import UserRepository from "../repositories/UserRepository";
 import IUserRepository from "../repositories/IUserRepository";
 import IMailProvider from "@shared/providers/MailProvider/IMailProvider";
 import AppError from "@shared/errors/AppError";
@@ -31,8 +30,22 @@ export default class RecuperarSenhaService {
             throw new AppError('Usuario nao existe')
         }
 
-        await this.userTokenRepository.generate(user.id)
-        this.mailProvider.sendMail(email, 'Envio de email test')
+        const { token } = await this.userTokenRepository.generate(user.id)
+         
+        await this.mailProvider.sendMail({
+            to: {
+                name: user.name,
+                email: user.email
+            },
+            subject: 'Recuperacao de senha',
+            templateData: {
+                template: 'Ola, {{name}}: {{token}}',
+                variables: {
+                    name: user.name,
+                    token
+                }
+            }
+        })
     }
 
 }

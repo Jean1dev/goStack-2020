@@ -1,5 +1,5 @@
 import IUserTokenRepository from "./IUserTokenRepository";
-import UserToken from "../UserToken";
+import UserToken from "../typeorm/model/UserToken";
 import { uuid } from 'uuidv4'
 
 export default class UserTokenRepositoryMock implements IUserTokenRepository {

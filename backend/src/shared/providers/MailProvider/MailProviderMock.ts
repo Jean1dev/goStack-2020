@@ -1,18 +1,11 @@
 import IMailProvider from "./IMailProvider";
-
-interface Message {
-    to: string
-    body: string
-}
+import ISendMailDto from "./ISendMailDto";
 
 export default class MailProviderMock implements IMailProvider {
-    private message: Message
+    private message: ISendMailDto
 
-    public async sendMail(to: string, body: string): Promise<void> {
-        this.message = {
-            to,
-            body
-        }
+    public async sendMail(message: ISendMailDto): Promise<void> {
+        this.message = message
     }
 
 }

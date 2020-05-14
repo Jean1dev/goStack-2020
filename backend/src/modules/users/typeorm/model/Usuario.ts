@@ -7,10 +7,10 @@ class Usuario {
     id: string
 
     @Column()
-    name: String
+    name: string
 
     @Column()
-    email: String
+    email: string
 
     @Column()
     avatar: string
