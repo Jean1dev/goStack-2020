@@ -4,3 +4,4 @@ temp/*
 volumes/
 !temp/.gitkeep
 coverage/
+.env

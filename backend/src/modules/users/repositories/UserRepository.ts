@@ -1,5 +1,5 @@
 import IUserRepository from "./IUserRepository";
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Repository, Not } from "typeorm";
 import Usuario from "../typeorm/model/Usuario";
 import ICreateUserDto from "../dtos/ICreateUserDto";
 
@@ -8,6 +8,21 @@ export default class UserRepository implements IUserRepository {
 
     constructor() {
         this.repository = getRepository(Usuario)
+    }
+
+    public async findAllProviders(except_user_id?: string | undefined): Promise<Usuario[]> {
+        let users 
+        if (except_user_id) {
+            users = this.repository.find({
+                where: {
+                    id: Not(except_user_id)
+                }
+            })
+        } else {
+            users = this.repository.find()
+        }
+
+        return users
     }
 
     public async findById(id: string): Promise<Usuario | undefined> {

@@ -5,8 +5,10 @@ import multer from 'multer'
 import multerConfig from '@config/upload'
 import UpdateUsuarioAvatarService from '../services/UpdateUsuarioAvatar'
 import { container } from 'tsyringe'
-import { Controller, Post, Body, Patch, Req, UseBefore } from 'routing-controllers'
+import { Controller, Post, Body, Patch, Req, UseBefore, Put, Get } from 'routing-controllers'
 import Usuario from '../typeorm/model/Usuario'
+import AtualizarPerfilService from '../services/AtualizarPerfilService'
+import { classToClass } from 'class-transformer'
 
 const upload = multer(multerConfig)
 
@@ -25,8 +27,7 @@ export default class UsuarioController {
 
         const service = container.resolve(CriarUsuarioService)
         const user = await service.execute({ name, email, password })
-        delete user?.password
-        return user
+        return classToClass(user)
     }
 
     @Patch('/avatar')
@@ -34,7 +35,24 @@ export default class UsuarioController {
     public async updateAvatar(@Req() req: Request): Promise<Usuario> {
         const service = container.resolve(UpdateUsuarioAvatarService)
         const user = await service.execute({ user_id: req.user.id, avatarFileName: req.file.filename })
-        return user
+        return classToClass(user)
     }
 
+    @Put()
+    @UseBefore(authenticateMiddlware)
+    public async updateUser(@Req() req: Request,@Body() data: CreateUserBody): Promise<Usuario> {
+        const user_id = req.user.id
+        const { name, email, password } = data
+
+        const service = container.resolve(AtualizarPerfilService)
+        const user = await service.execute({ name, email, password, user_id })
+        return classToClass(user)
+    }
+
+    @Get()
+    @UseBefore(authenticateMiddlware)
+    public async show(@Req() req: Request): Promise<Usuario | undefined> {
+        const user_id = req.user.id
+        return classToClass(Usuario.findOne({ where: { id: user_id }}))
+    }
 }

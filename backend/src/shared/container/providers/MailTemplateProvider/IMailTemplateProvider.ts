@@ -1,5 +1,5 @@
 export interface IParseMailTemplateDto {
-    template: string
+    file: string
     variables: object
 }
 

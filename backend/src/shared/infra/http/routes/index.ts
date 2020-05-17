@@ -3,6 +3,7 @@ import SessaoController from '@modules/users/routes/SessaoController'
 import UsuarioController from '@modules/users/routes/UsuarioController'
 import AgendamentosController from '@modules/agendamentos/routes/AgendamentosController'
 import PasswordController from '@modules/api/PasswordController'
+import PrestadoresController from '@modules/agendamentos/routes/PrestadoresController'
 
 const routes = Router()
 
@@ -13,7 +14,8 @@ function registerRoutes() {
         SessaoController,
         UsuarioController,
         AgendamentosController,
-        PasswordController
+        PasswordController,
+        PrestadoresController
     ]
 }
 

@@ -1,6 +1,6 @@
 import UserRepositoryMock from "../repositories/mocks/UserRepositoryMock"
 import RecuperarSenhaService from "./RecuperarSenhaService"
-import MailProviderMock from "@shared/providers/MailProvider/MailProviderMock"
+import MailProviderMock from "@shared/container/providers/MailProvider/MailProviderMock"
 import AppError from "@shared/errors/AppError"
 import UserTokenRepositoryMock from "@modules/token/repositories/UserTokenRepositoryMock"
 

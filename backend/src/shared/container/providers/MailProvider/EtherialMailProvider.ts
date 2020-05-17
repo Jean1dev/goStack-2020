@@ -14,7 +14,7 @@ export default class EtherialMailProvider implements IMailProvider {
     ) {
         this.templateProvider = templateProvider
 
-        const account = nodemailer.createTestAccount().then(account => {
+        nodemailer.createTestAccount().then(account => {
             const transport = nodemailer.createTransport({
                 host: account.smtp.host,
                 port: account.smtp.port,
@@ -30,16 +30,9 @@ export default class EtherialMailProvider implements IMailProvider {
     }
 
     public async sendMail({ to, subject, from, templateData }: ISendMailDto): Promise<void> {
-        console.log({ to, subject, from, templateData })
-        const message = await this.client.sendMail( {
-            from: {
-                name: from?.name || 'email from jean',
-                address: from?.email || 'email from jean'
-            },
-            to: {
-                name: to.name,
-                address: to.email
-            },
+        const message = await this.client.sendMail({
+            from: 'Sender Name <sender@example.com>',
+            to: `Recipient <${to.email}>`,
             subject,
             html: await this.templateProvider.parse(templateData)
         })

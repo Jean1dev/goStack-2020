@@ -1,8 +1,9 @@
 import { injectable, inject } from "tsyringe";
 import IUserRepository from "../repositories/IUserRepository";
-import IMailProvider from "@shared/providers/MailProvider/IMailProvider";
+import IMailProvider from "@shared/container/providers/MailProvider/IMailProvider";
 import AppError from "@shared/errors/AppError";
 import IUserTokenRepository from "@modules/token/repositories/IUserTokenRepository";
+import path from 'path'
 
 interface IRequest {
     email: string
@@ -31,7 +32,8 @@ export default class RecuperarSenhaService {
         }
 
         const { token } = await this.userTokenRepository.generate(user.id)
-         
+        const templatePath = path.resolve(__dirname, '..', 'views', 'forgot_password.hbs')
+
         await this.mailProvider.sendMail({
             to: {
                 name: user.name,
@@ -39,10 +41,11 @@ export default class RecuperarSenhaService {
             },
             subject: 'Recuperacao de senha',
             templateData: {
-                template: 'Ola, {{name}}: {{token}}',
+                file: templatePath,
                 variables: {
                     name: user.name,
-                    token
+                    token,
+                    link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`
                 }
             }
         })

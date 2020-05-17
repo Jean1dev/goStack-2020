@@ -5,7 +5,7 @@ import config from '@config/upload'
 import AppError from '@shared/errors/AppError';
 import IUserRepository from '../repositories/IUserRepository';
 import { inject, injectable } from 'tsyringe';
-import IStorageProvider from '@shared/providers/StorageProvider/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/StorageProvider/IStorageProvider';
 
 interface Request {
     user_id: string,

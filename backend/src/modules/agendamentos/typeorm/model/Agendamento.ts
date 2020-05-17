@@ -14,6 +14,13 @@ class Agendamento {
     @JoinColumn({ name: 'provider_id' })
     provider: Usuario
 
+    @Column()
+    user_id: String
+
+    @ManyToOne(() => Usuario)
+    @JoinColumn({ name: 'user_id' })
+    user: Usuario
+
     @Column('timestamp with time zone')
     date: Date
 

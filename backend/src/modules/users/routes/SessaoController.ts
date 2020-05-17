@@ -2,6 +2,7 @@ import AutenticacaoService from '../services/AutenticacaoService'
 import { container } from 'tsyringe'
 import { Controller, Post, Body } from 'routing-controllers'
 import Usuario from '../typeorm/model/Usuario'
+import { classToClass } from 'class-transformer'
 
 interface SessaoBody {
     email: string
@@ -22,6 +23,6 @@ export default class SessaoController {
 
         const service = container.resolve(AutenticacaoService)
         const { user, token } = await service.execute({ email, password })  
-        return { user, token }
+        return { user: classToClass(user), token }
     }
 }
