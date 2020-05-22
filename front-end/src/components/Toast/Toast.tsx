@@ -28,7 +28,7 @@ const ToastComponent: React.FC<ToastProps> = ({ message, style }) => {
     }, [removeToast, message.id])
 
     return (
-        <Toast type={message.type} hasdescription={!!message.description} style={style}>
+        <Toast type={message.type} hasdescription={Number(!!message.description)} style={style}>
             {icons[message.type || 'info']}
 
             <div>

@@ -26,7 +26,9 @@ class CriarAgendamentoService {
         if (isBefore(dataDoAgendamento, Date.now())) {
             throw new AppError('Data do agendamento anterior a data atual')
         }
-        const existeAgendamentoComMesmaData = await this.repository.findByDate(dataDoAgendamento)
+        const existeAgendamentoComMesmaData = await this.repository.findByDate(
+            dataDoAgendamento,
+            provider_id)
         
         if (existeAgendamentoComMesmaData) {
             throw new AppError('Ja existe um agendamento pra esse dia')

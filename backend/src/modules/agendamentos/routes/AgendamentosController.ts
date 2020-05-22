@@ -1,5 +1,4 @@
 import CriarAgendamentoService from '@modules/agendamentos/services/CriarAgendamentoService'
-import { parseISO } from 'date-fns'
 import authenticationMiddleware from '@shared/infra/http/middlewares/autenticacao'
 import { container } from 'tsyringe'
 import { Controller, Post, Body, Get, UseBefore, Req, QueryParam } from 'routing-controllers'

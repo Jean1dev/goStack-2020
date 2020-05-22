@@ -22,7 +22,8 @@ class AgendamentoRepository implements IAgendamentosRepository {
                 date: Raw(dateFieldName => 
                     `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`
                 ),
-            }
+            },
+            relations: [ 'user' ]
         })
     }
 
@@ -45,9 +46,9 @@ class AgendamentoRepository implements IAgendamentosRepository {
         return agendamento
     }
     
-    public async findByDate(date: Date): Promise<Agendamento | undefined> {
+    public async findByDate(date: Date, provider_id: string): Promise<Agendamento | undefined> {
         return await this.repository.findOne({
-            where: { date }
+            where: { date, provider_id }
         })
     }
 

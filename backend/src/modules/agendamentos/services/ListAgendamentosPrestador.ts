@@ -2,6 +2,7 @@ import { injectable, inject } from "tsyringe";
 import { IAgendamentosRepository } from "../repositories/IAgendamentosRepository";
 import Agendamento from "../typeorm/model/Agendamento";
 import ICacheProvider from "@shared/container/providers/CacheProvider/ICacheProvider";
+import { classToClass } from "class-transformer";
 
 interface IRequest {
     provider_id: string
@@ -29,7 +30,7 @@ export default class ListAgendamentosPrestador {
                 provider_id
             })
 
-            await this.cache.save(key, agendamentos)
+            await this.cache.save(key, classToClass(agendamentos))
         }
 
         return agendamentos

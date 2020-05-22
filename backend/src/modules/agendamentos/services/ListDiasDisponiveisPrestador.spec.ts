@@ -26,9 +26,15 @@ describe('ListDiasDisponiveisPrestador', () => {
         const disponiveis = await service.execute({ provider_id: '1', year: 2020, month: 5, day: 20 })
         expect(disponiveis).toEqual(expect.arrayContaining([
             { hour: 8, available: false},
-            { hour: 9, available: true},
+            { hour: 9, available: false},
             { hour: 10, available: false},
-            { hour: 11, available: true},
+            { hour: 11, available: false},
+            { hour: 12, available: false},
+            { hour: 13, available: false},
+            { hour: 14, available: false},
+            { hour: 15, available: false},
+            { hour: 16, available: false},
+            { hour: 17, available: false},
         ]))
     })
 

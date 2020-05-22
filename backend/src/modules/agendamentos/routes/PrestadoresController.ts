@@ -6,6 +6,7 @@ import { container } from "tsyringe";
 import ListPrestadoresService from "../services/ListPrestadoresService";
 import Agendamento from "../typeorm/model/Agendamento";
 import ListAgendamentosPrestador from "../services/ListAgendamentosPrestador";
+import { classToClass } from "class-transformer";
 
 @Controller('/prestadores')
 @UseBefore(authenticationMiddleware)
@@ -23,11 +24,11 @@ export default class PrestadoresController {
         @QueryParam("year") year: number,
         @QueryParam("day") day: number): Promise<Agendamento[]> {
 
-        return container.resolve(ListAgendamentosPrestador).execute({
+        return classToClass(container.resolve(ListAgendamentosPrestador).execute({
             provider_id: req.user.id,
             day,
             month,
             year
-        })
+        }))
     }
 }

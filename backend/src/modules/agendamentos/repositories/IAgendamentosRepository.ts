@@ -5,7 +5,7 @@ import IFindAllInDayFromProviderDto from "../dtos/IFindAllInDayFromProviderDto";
 
 export interface IAgendamentosRepository {
     create(data: ICreateAgendamentoDto): Promise<Agendamento>
-    findByDate(date: Date): Promise<Agendamento | undefined>
+    findByDate(date: Date, provider_id: string): Promise<Agendamento | undefined>
     findAllInMonthFromProvider(data: IFindAllInMonthFromProviderDto): Promise<Agendamento[]>
     findAllInDayFromProvider(data: IFindAllInDayFromProviderDto): Promise<Agendamento[]>
 }
