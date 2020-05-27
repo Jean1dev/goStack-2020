@@ -9,7 +9,7 @@ import { FormHandles } from '@unform/core'
 import getValidationErrors from '../../utils/getValidationErros'
 import * as Yup from 'yup'
 import { useToast } from '../../hooks/ToastContext'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import api from '../../services/api'
 
 interface ResetPasswordFormData {
@@ -22,6 +22,7 @@ const ResetPassword: React.FC = () => {
     const formRef = useRef<FormHandles>(null)
     const { addToast } = useToast()
     const history = useHistory()
+    const location = useLocation()
 
     const handleSubmit = useCallback(async (data: ResetPasswordFormData): Promise<void> => {
         try {
@@ -37,7 +38,8 @@ const ResetPassword: React.FC = () => {
 
             setLoading(true)
             await api.post('/password/reset', {
-                password: data.password
+                password: data.password,
+                token: location.search.replace('?token=', '')
             })
 
             addToast({
@@ -59,7 +61,7 @@ const ResetPassword: React.FC = () => {
         } finally {
             setLoading(false)
         }
-    }, [addToast, history])
+    }, [addToast, history, location.search])
 
     return (
         <Container>

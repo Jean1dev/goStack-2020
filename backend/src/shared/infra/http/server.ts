@@ -22,13 +22,13 @@ app.use('/files', express.static(uploadConfig.updloadFolder))
 
 app.use(routes)
 useExpressServer(app, {
-    controllers: registerRoutes()
+    controllers: registerRoutes(),
+    defaultErrorHandler: false
 })
 
 app.use(errors())
 
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
-    console.log('ERROR EXPRESS')
     if (error instanceof AppError) {
         return response.status(error.statusCode).json({
             status: 'error',

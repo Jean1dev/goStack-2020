@@ -2,6 +2,7 @@ version: '3.4'
 
 services: 
   postgres:
+    container_name: pg
     image: postgres:alpine
     ports:
       - "5432:5432"
@@ -13,6 +14,7 @@ services:
       - "./volumes/postgres/:/var/lib/postgresql/data/"
 
   mongodb:
+    container_name: mongo
     image: mongo:3.6
     ports:
     - "27017:27017"
@@ -20,9 +22,9 @@ services:
     - ./volumes/mongodb:/data/db
 
   redis:
+    container_name: redis
     image: redis:alpine
     ports:
     - "6379:6379"
     volumes:
     - /volumes/redis:/data
-    container_name: redis
