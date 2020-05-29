@@ -23,12 +23,12 @@ export default class PrestadoresController {
         @QueryParam("month") month: number,
         @QueryParam("year") year: number,
         @QueryParam("day") day: number): Promise<Agendamento[]> {
-
-        return classToClass(container.resolve(ListAgendamentosPrestador).execute({
+            // TESTAR O CLASS TO CLASS QND EXISTE DADOS
+        return container.resolve(ListAgendamentosPrestador).execute({
             provider_id: req.user.id,
             day,
             month,
             year
-        }))
+        })
     }
 }

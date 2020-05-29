@@ -1,6 +1,6 @@
 import { injectable, inject } from "tsyringe";
 import { IAgendamentosRepository } from "../repositories/IAgendamentosRepository";
-import { getDaysInMonth, getDate, isAfter } from "date-fns";
+import { getDaysInMonth, getDate, isBefore } from "date-fns";
 
 interface IRequest {
     provider_id: string
@@ -29,14 +29,14 @@ export default class ListMesesDiponiveisPeloProvedor {
         const eachDay = Array.from({ length: numberOfDaysInMonth }, (_, index) => index + 1)
         const disponilibidade = eachDay.map(day => {
             const compareDate = new Date(year, month -1, day, 23, 59, 59)
-
+    
             const agendamentosNoDia = agendamentos.filter(agendamento => {
                 return getDate(agendamento.date) === day
             })
-
+            
             return {
                 day,
-                available: isAfter(new Date(), compareDate) && agendamentosNoDia.length < 10
+                available: isBefore(new Date(), compareDate) && agendamentosNoDia.length < 10
             }
         })
 

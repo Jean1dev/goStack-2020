@@ -5,6 +5,7 @@ interface User {
     id: string
     avatar_url: string
     name: string
+    email: string
 }
 
 interface AuthState {
@@ -21,6 +22,7 @@ interface AuthContextProps {
     user: User
     signIn(credentials: SignInCredentials): Promise<void>
     signOut(): void
+    updateUser(user: User): void
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
@@ -31,6 +33,7 @@ const AuthProvider: React.FC = ({ children }) => {
         const user = localStorage.getItem('@GoBarber:user')
 
         if (token && user) {
+            api.defaults.headers.authorization = `Bearer ${token}`
             return {
                 token,
                 user: JSON.parse(user)
@@ -39,6 +42,14 @@ const AuthProvider: React.FC = ({ children }) => {
 
         return {} as AuthState
     })
+
+    const updateUser = useCallback((updateUser: User) => {
+        localStorage.setItem('@GoBarber:user', JSON.stringify(updateUser))
+        setData({
+            token: data.token,
+            user: updateUser
+        })
+    }, [setData, data])
 
     const signIn = useCallback(async ({ email, password }) => {
         const response = await api.post('/sessao', { email, password })
@@ -50,6 +61,7 @@ const AuthProvider: React.FC = ({ children }) => {
             token,
             user
         })
+        api.defaults.headers.authorization = `Bearer ${token}`
 
     }, [])
 
@@ -59,7 +71,7 @@ const AuthProvider: React.FC = ({ children }) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateUser }}>
             {children}
         </AuthContext.Provider>
     )

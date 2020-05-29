@@ -14,12 +14,12 @@ import RateLimiter from './middlewares/RateLimit'
 
 const app = express()
 
-app.use(RateLimiter)
 app.use(cors())
 app.use(express.json())
 
 app.use('/files', express.static(uploadConfig.updloadFolder))
 
+app.use(RateLimiter)
 app.use(routes)
 useExpressServer(app, {
     controllers: registerRoutes(),
@@ -35,7 +35,7 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
             message: error.message
         })
     }
-
+    console.log(error)
     return response.status(500).json({
         status: 'error',
         message: 'Internal server error'
@@ -44,5 +44,6 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
 
 app.listen(8080, () => {
     console.log(`🚀 server running ate port 8080`)
+    console.log(`AMBIENTE ${process.env.NODE_ENV}`)
 })
 
