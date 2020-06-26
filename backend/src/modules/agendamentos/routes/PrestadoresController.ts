@@ -14,7 +14,8 @@ export default class PrestadoresController {
 
     @Get()
     public async find(@Req() req: Request): Promise<Usuario[]> {
-        return container.resolve(ListPrestadoresService).execute(req.user.id)
+        const response = await container.resolve(ListPrestadoresService).execute(req.user.id)
+        return classToClass(response)
     }
 
     @Get('/agendamentos')
@@ -23,12 +24,12 @@ export default class PrestadoresController {
         @QueryParam("month") month: number,
         @QueryParam("year") year: number,
         @QueryParam("day") day: number): Promise<Agendamento[]> {
-            // TESTAR O CLASS TO CLASS QND EXISTE DADOS
-        return container.resolve(ListAgendamentosPrestador).execute({
+            
+        return classToClass(await container.resolve(ListAgendamentosPrestador).execute({
             provider_id: req.user.id,
             day,
             month,
             year
-        })
+        }))
     }
 }

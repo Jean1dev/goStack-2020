@@ -2,7 +2,7 @@
     {
         "name": "default",
         "type": "postgres",
-        "host": "localhost",
+        "host": "192.168.1.5",
         "port": 5432,
         "username": "jeanfernandes",
         "password": "admin",
@@ -20,7 +20,7 @@
     {
         "name": "mongo",
         "type": "mongodb",
-        "host": "localhost",
+        "host": "192.168.1.5",
         "port": 27017,
         "database": "db_go_stack",
         "useUnifiedTopology:": true,
