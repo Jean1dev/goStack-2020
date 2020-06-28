@@ -40,8 +40,8 @@ const AuthProvider: React.FC = ({ children }) => {
             ])
 
             if (user[1] && token[1]) {
-                setData({ user: JSON.parse(user[1]), token: token[1] })
                 api.defaults.headers.authorization = `Bearer ${token[1]}`
+                setData({ user: JSON.parse(user[1]), token: token[1] })
             }
             setLoading(false)
         }
@@ -53,13 +53,18 @@ const AuthProvider: React.FC = ({ children }) => {
         const response = await api.post('/sessao', { email, password })
 
         const { token, user } = response.data
+
+        if (!user.avatar_url) {
+            user.avatar_url = 'https://api.adorable.io/avatars/285/abott@adorable.png'
+        }
+        
         await AsyncStorage.setItem('@GoBarber:token', token)
         await AsyncStorage.setItem('@GoBarber:user', JSON.stringify(user))
+        api.defaults.headers.authorization = `Bearer ${token}`
         setData({
             token,
             user
         })
-        api.defaults.headers.authorization = `Bearer ${token}`
     }, [])
 
     const signOut = useCallback(async () => {

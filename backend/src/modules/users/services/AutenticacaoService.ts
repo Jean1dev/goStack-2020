@@ -40,7 +40,7 @@ export default class AutenticacaoService {
 
         const token = sign({}, config.SECRET_KEY, {
             subject: user.id,
-            expiresIn: '1d'
+            expiresIn: '7d'
         })
 
         delete user.password
