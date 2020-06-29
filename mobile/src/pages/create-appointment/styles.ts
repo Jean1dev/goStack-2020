@@ -92,3 +92,51 @@ export const OpenDatePickerText = styled.Text`
     font-size: 16px;
     color: #232129;
 `
+
+export const Schedule = styled.View`
+    padding: 24px 0 16px;
+`
+
+export const SectionContent = styled.ScrollView.attrs({
+    contentContainerStyle: { paddingHorizontal: 24 },
+    showHorizontalScrollIndicator: false
+})``
+
+export const Section = styled.View`
+    margin-bottom: 24px;
+`
+
+export const SectionTitle = styled.Text`
+    font-size: 18px;
+    color: #999591;
+    font-family: 'RoboSlab-Regular';
+    margin: 0 24px 12px;
+`
+
+interface HourProps {
+    selected: boolean
+}
+
+export const Hour = styled(RectButton)<HourProps>`
+    padding: 12px;
+    background: ${(props) => props.selected ? '#ff9000' : '#3e3b47'};
+    border-radius: 10px;
+    margin-right: 8px;
+`
+    
+export const HourText = styled.Text`
+    color: #f4ede8;
+    font-family: 'RoboSlab-Regular';
+    font-size: 18px;
+`
+
+export const CreateAppointmentButton = styled(RectButton)`
+    height: 46px;
+    background: #ff9000;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 24px;
+`
+
+export const CreateAppointmentText = styled.Text``

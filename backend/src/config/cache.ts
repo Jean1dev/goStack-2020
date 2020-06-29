@@ -12,7 +12,7 @@ export default {
     driver: 'redis',
     config: {
         redis: {
-            host: '192.168.1.5',
+            host: '192.168.1.2',
             port: 6379
         }
     }

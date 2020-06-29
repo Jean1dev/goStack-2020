@@ -39,7 +39,8 @@ const ResetPassword: React.FC = () => {
             setLoading(true)
             await api.post('/password/reset', {
                 password: data.password,
-                token: location.search.replace('?token=', '')
+                token: location.search.replace('?token=', ''),
+                password_confimation: data.password_confirmation
             })
 
             addToast({
