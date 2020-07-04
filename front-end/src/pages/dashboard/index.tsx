@@ -106,8 +106,8 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         api.get<AppointmentItem[]>('/prestadores/agendamentos', {
             params: {
-                month: selectedDate.getFullYear(),
-                year: selectedDate.getMonth() + 1,
+                year: selectedDate.getFullYear(),
+                month: selectedDate.getMonth() + 1,
                 day: selectedDate.getDate()
             }
         }).then(response => {
@@ -178,8 +178,8 @@ const Dashboard: React.FC = () => {
                                     {appointment.hourFormatted}
                                 </span>
                                 <div>
-                                    <img src={appointment.user.avatar_url} alt={appointment.user.name}></img>
-                                    <strong>{appointment.user.name} </strong>
+                                    <img src={appointment.user?.avatar_url} alt={appointment.user?.name}></img>
+                                    <strong>{appointment.user?.name} </strong>
                                 </div>
                             </Appointment>
                         ))}
@@ -197,8 +197,8 @@ const Dashboard: React.FC = () => {
                                     {appointment.hourFormatted}
                                 </span>
                                 <div>
-                                    <img src={appointment.user.avatar_url} alt={appointment.user.name}></img>
-                                    <strong>{appointment.user.name} </strong>
+                                    <img src={appointment.user.avatar_url} alt={appointment.user?.name}></img>
+                                    <strong>{appointment.user?.name} </strong>
                                 </div>
                             </Appointment>
                         ))}

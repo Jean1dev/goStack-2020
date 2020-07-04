@@ -2,7 +2,7 @@
     {
         "name": "default",
         "type": "postgres",
-        "host": "192.168.1.2",
+        "host": "192.168.1.9",
         "port": 5432,
         "username": "jeanfernandes",
         "password": "admin",
@@ -15,12 +15,13 @@
         ],
         "cli": {
             "migrationsDir": "./src/shared/infra/database/migrations/"
-        }
+        },
+        "logging": true
     },
     {
         "name": "mongo",
         "type": "mongodb",
-        "host": "192.168.1.2",
+        "host": "192.168.1.9",
         "port": 27017,
         "database": "db_go_stack",
         "useUnifiedTopology:": true,

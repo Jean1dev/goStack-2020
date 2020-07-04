@@ -20,8 +20,8 @@ export default class ListAgendamentosPrestador {
 
     public async execute({ provider_id, day, month, year }: IRequest): Promise<Agendamento[]> {
         const key = `provider-appointments:${provider_id}:${day}-${month}-${year}`
-        let agendamentos = await this.cache.get<Agendamento[]>(key)
-
+        let agendamentos = null//await this.cache.get<Agendamento[]>(key)
+        
         if (!agendamentos) {
             agendamentos = await this.repository.findAllInDayFromProvider({
                 day,

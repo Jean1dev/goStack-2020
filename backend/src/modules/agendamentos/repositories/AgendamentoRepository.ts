@@ -15,7 +15,7 @@ class AgendamentoRepository implements IAgendamentosRepository {
         const { provider_id, year, month, day } = data
         const parsedMonth = String(month).padStart(2, '0')
         const parsedDay = String(day).padStart(2, '0')
-
+        
         return this.repository.find({
             where: {
                 provider_id,
@@ -40,8 +40,8 @@ class AgendamentoRepository implements IAgendamentosRepository {
         })
     }
 
-    public async create({ date, provider_id }: ICreateAgendamentoDto): Promise<Agendamento> {
-        const agendamento = this.repository.create({ provider_id, date })
+    public async create({ date, provider_id, user_id }: ICreateAgendamentoDto): Promise<Agendamento> {
+        const agendamento = this.repository.create({ provider_id, date, user_id })
         await this.repository.save(agendamento)
         return agendamento
     }
