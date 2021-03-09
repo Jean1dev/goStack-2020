@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { UseBefore, Controller, Get, Req, QueryParam } from "routing-controllers";
 import authenticationMiddleware from '@shared/infra/http/middlewares/autenticacao'
 import Usuario from "@modules/users/typeorm/model/Usuario";

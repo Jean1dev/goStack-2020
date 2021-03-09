@@ -17,6 +17,7 @@ export default class S3StorageProvider implements IStorageProvider {
     public async saveFile(file: string): Promise<string> {
         const originalPath = path.resolve(uploadConfig.directory, file)
         const fileContent = await fs.promises.readFile(originalPath)
+        //@ts-ignore
         const contentType = mime.getType(originalPath)
         if (!contentType) throw new Error('Erro ao salvar arquivo no S3')
 

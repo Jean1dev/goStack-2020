@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Request } from 'express'
 import CriarUsuarioService from '../services/CriarUsuarioService'
 import authenticateMiddlware from '@shared/infra/http/middlewares/autenticacao'
@@ -40,7 +41,7 @@ export default class UsuarioController {
 
     @Put()
     @UseBefore(authenticateMiddlware)
-    public async updateUser(@Req() req: Request,@Body() data: CreateUserBody): Promise<Usuario> {
+    public async updateUser(@Req() req: Request, @Body() data: CreateUserBody): Promise<Usuario> {
         const user_id = req.user.id
         const { name, email, password } = data
 
@@ -53,6 +54,6 @@ export default class UsuarioController {
     @UseBefore(authenticateMiddlware)
     public async show(@Req() req: Request): Promise<Usuario | undefined> {
         const user_id = req.user.id
-        return classToClass(Usuario.findOne({ where: { id: user_id }}))
+        return classToClass(Usuario.findOne({ where: { id: user_id } }))
     }
 }
