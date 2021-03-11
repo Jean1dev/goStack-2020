@@ -16,6 +16,6 @@ ENV REDIS_URL redis
 
 EXPOSE $PORT
 
-RUN npx typeorm migration:run
+#RUN npx typeorm migration:run
 #RUN npm run migrate
 CMD [ "npm", "run", "local" ]

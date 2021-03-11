@@ -21,7 +21,7 @@
     {
         "name": "mongo",
         "type": "mongodb",
-        "host": "mongodb",
+        "host": "localhost",
         "port": 27017,
         "database": "db_go_stack",
         "useUnifiedTopology:": true,

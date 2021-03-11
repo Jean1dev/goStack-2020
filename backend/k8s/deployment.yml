@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gostack
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gostack
+  template: 
+    metadata:  
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"              
+      labels:
+        app: api-gostack
+    spec:            
+      containers:
+      - name: api-gostack        
+        image: jeanlucafp/gostack2020:latest
+        ports:
+        - containerPort: 8080        

@@ -1,5 +1,9 @@
 version: '3.4'
 
+networks:
+  local-network:
+    driver: bridge
+
 services: 
   postgres:
     container_name: pg_gostack
@@ -12,6 +16,8 @@ services:
       POSTGRES_PASSWORD: "admin"
     volumes:
       - "./volumes/postgres"
+    networks:
+      - local-network
 
   mongodb:
     container_name: mongo_gostack
@@ -20,6 +26,8 @@ services:
     - "27017:27017"
     volumes:
     - ./volumes/mongodb
+    networks:
+      - local-network
 
   redis:
     container_name: redis_gostack
@@ -28,13 +36,17 @@ services:
     - "6379:6379"
     volumes:
     - /volumes/redis:/data
+    networks:
+      - local-network
 
-  api:
-    container_name: backend_gostack
-    depends_on:
-      - postgres
-      - redis
-      - mongodb
-    build: .
-    ports: 
-    - "8080:8080"
+  # api:
+  #   container_name: backend_gostack
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #     - mongodb
+  #   build: .
+  #   ports: 
+  #   - "8080:8080"
+  #   networks:
+  #     - local-network
