@@ -9,7 +9,7 @@
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migrate": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run",
     "test": "jest",
-    "local": "NODE_ENV=dev ts-node-dev -r tsconfig-paths/register --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts"
+    "local": "NODE_ENV=dev ts-node-dev -r tsconfig-paths/register --ignore-watch node_modules src/shared/infra/http/server.ts"
   },
   "author": "",
   "license": "ISC",

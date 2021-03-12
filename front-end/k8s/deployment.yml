@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-gostack
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-gostack
+  template: 
+    metadata:              
+      labels:
+        app: front-gostack
+    spec:            
+      containers:
+      - name: front-gostack
+        image: jeanlucafp/front-end-gostack:latest
+        ports:
+        - containerPort: 3000        

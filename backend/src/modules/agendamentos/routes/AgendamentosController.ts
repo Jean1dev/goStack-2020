@@ -1,3 +1,4 @@
+//@ts-nocheck
 import CriarAgendamentoService from '@modules/agendamentos/services/CriarAgendamentoService'
 import authenticationMiddleware from '@shared/infra/http/middlewares/autenticacao'
 import { container } from 'tsyringe'

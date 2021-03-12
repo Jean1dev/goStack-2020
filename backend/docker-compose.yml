@@ -1,8 +1,12 @@
 version: '3.4'
 
+networks:
+  local-network:
+    driver: bridge
+
 services: 
   postgres:
-    container_name: pg
+    container_name: pg_gostack
     image: postgres:alpine
     ports:
       - "5432:5432"
@@ -11,20 +15,38 @@ services:
       POSTGRES_USER: "jeanfernandes"
       POSTGRES_PASSWORD: "admin"
     volumes:
-      - "./volumes/postgres/:/var/lib/postgresql/data/"
+      - "./volumes/postgres"
+    networks:
+      - local-network
 
   mongodb:
-    container_name: mongo
+    container_name: mongo_gostack
     image: mongo:3.6
     ports:
     - "27017:27017"
     volumes:
-    - ./volumes/mongodb:/data/db
+    - ./volumes/mongodb
+    networks:
+      - local-network
 
   redis:
-    container_name: redis
+    container_name: redis_gostack
     image: redis:alpine
     ports:
     - "6379:6379"
     volumes:
     - /volumes/redis:/data
+    networks:
+      - local-network
+
+  # api:
+  #   container_name: backend_gostack
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #     - mongodb
+  #   build: .
+  #   ports: 
+  #   - "8080:8080"
+  #   networks:
+  #     - local-network

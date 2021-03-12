@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Request, Response, NextFunction } from "express";
 import config from '@config/auth'
 import { verify } from "jsonwebtoken";

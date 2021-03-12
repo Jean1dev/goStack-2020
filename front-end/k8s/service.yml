@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-gostack
+spec:
+  selector:
+    app: front-gostack
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 30002
+  type: LoadBalancer
+
+  
